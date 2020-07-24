@@ -1,11 +1,22 @@
 import React from "react";
+import uuid from "react-uuid";
+import { connect } from "react-redux";
 
-export default function Tags(props) {
+function Tags(props) {
+  const tags = props.state.tags.filter((tag) => {
+    return tag !== "";
+  });
+  console.log(tags, "tags");
+
   return (
     <div className="tag-div">
-      {props.tags.map((tag) => {
+      {tags.map((tag) => {
         return (
-          <button className="single-tag" onClick={() => props.handle(tag)}>
+          <button
+            key={uuid()}
+            className="single-tag"
+            onClick={() => props.handle(tag)}
+          >
             {tag}
           </button>
         );
@@ -13,3 +24,9 @@ export default function Tags(props) {
     </div>
   );
 }
+function mapState(state) {
+  return { state };
+}
+
+// export default connect((state) => ({ state }))(App);
+export default connect(mapState)(Tags);

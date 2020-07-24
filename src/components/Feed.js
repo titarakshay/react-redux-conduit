@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-function Feed() {
-  const { articles } = this.props.state.articles;
-  console.log(articles, "here we get");
+import uuid from "react-uuid";
+function Feed(props) {
+  const { articles } = props.state;
   return (
     <div className="feed">
       {articles.map((article) => {
         return (
-          <div className="article-div">
+          <div className="article-div" key={uuid()}>
             <div className="name-count">
               <div className="name-div">
                 <img src={article.author.image} alt={article.author.username} />
@@ -17,7 +17,7 @@ function Feed() {
                 </div>
               </div>
               <div className="favorite-count">
-                <i class="fas fa-heart"></i>
+                <i className="fas fa-heart"></i>
                 <span>{article.favoritesCount}</span>
               </div>
             </div>
@@ -28,7 +28,7 @@ function Feed() {
                 <p className="read-more">Read more...</p>
                 <div className="taglist">
                   {article.tagList.map((tag) => {
-                    return <span>{tag}</span>;
+                    return <span key={uuid()}>{tag}</span>;
                   })}
                 </div>
               </div>

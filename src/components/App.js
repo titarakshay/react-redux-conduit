@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addArticle } from "../store/action";
+import { addArticle, addTags, selectTags } from "../store/action";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
@@ -9,10 +9,22 @@ import Signup from "./Signup";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tagname: null,
+    };
+  }
   componentDidMount() {
-    fetch("https://conduit.productionready.io/api/articles?limit=10&offset=0")
+    var url =
+      "https://conduit.productionready.io/api/articles?limit=10&offset=0";
+    var url2 = "https://conduit.productionready.io/api/tags";
+    fetch(url)
       .then((res) => res.json())
-      .then((articles) => this.props.dispatch(addArticle(articles)));
+      .then((data) => this.props.dispatch(addArticle(data.articles)));
+    fetch(url2)
+      .then((res) => res.json())
+      .then((data) => this.props.dispatch(addTags(data.tags)));
   }
   handleTag(tag) {
     if (tag === "global") {
@@ -25,7 +37,7 @@ class App extends React.Component {
     }
     fetch(tagUrl)
       .then((res) => res.json())
-      .then((data) => this.setState({ feed: data.articles }));
+      .then((data) => this.props.dispatch(selectTags(data.articles)));
   }
   render() {
     return (
@@ -36,7 +48,6 @@ class App extends React.Component {
             path="/"
             render={() => (
               <Main
-                tags={this.state.tags}
                 tagname={this.state.tagname}
                 handle={(tag) => this.handleTag(tag)}
               />
