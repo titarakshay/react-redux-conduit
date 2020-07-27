@@ -6,7 +6,6 @@ function Tags(props) {
   const tags = props.state.tags.filter((tag) => {
     return tag !== "";
   });
-  console.log(tags, "tags");
 
   return (
     <div className="tag-div">

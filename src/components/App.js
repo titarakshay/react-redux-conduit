@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchArticle, addTags, selectTags, fetchTags } from "../store/action";
+import { fetchArticle, fetchTags } from "../store/action";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
@@ -19,19 +19,30 @@ class App extends React.Component {
     var url =
       "https://conduit.productionready.io/api/articles?limit=10&offset=0";
     var url2 = "https://conduit.productionready.io/api/tags";
-    this.props.dispatch(fetchArticle(url));
+    var userurl =
+      " https://conduit.productionready.io/api/articles/feed?limit=10&offset=0";
+    if (this.props.state.userInfo) {
+      this.props.dispatch(fetchArticle(userurl, localStorage.authToken));
+    } else {
+      this.props.dispatch(fetchArticle(url));
+    }
+
     this.props.dispatch(fetchTags(url2));
   }
   handleTag(tag) {
-    if (tag === "global") {
+    if (tag == "global") {
+      this.setState({ tagname: "" });
       var tagUrl =
         "https://conduit.productionready.io/api/articles?limit=10&offset=0";
+    } else if (tag == "userArticle") {
       this.setState({ tagname: "" });
+      tagUrl =
+        " https://conduit.productionready.io/api/articles/feed?limit=10&offset=0";
     } else {
       this.setState({ tagname: tag });
       tagUrl = `https://conduit.productionready.io/api/articles?tag=${tag}&limit=10&offset=0`;
     }
-    this.props.dispatch(fetchArticle(tagUrl));
+    this.props.dispatch(fetchArticle(tagUrl, localStorage.authToken));
   }
   render() {
     return (
@@ -50,6 +61,16 @@ class App extends React.Component {
           />
           <Route path="/Signin" component={Signin} />
           <Route path="/Signup" component={Signup} />
+          <Route
+            path="/yourFeed"
+            render={() => (
+              <Main
+                tagname={this.state.tagname}
+                handle={(tag) => this.handleTag(tag)}
+              />
+            )}
+            exact
+          />
           <Route component={Error} />
         </Switch>
         <Footer />

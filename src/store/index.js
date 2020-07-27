@@ -1,19 +1,31 @@
 import { createStore, applyMiddleware } from "redux";
-import { ADD_ARTICLES, ADD_TAGS, SELECT_TAGS } from "./Types";
+import {
+  GET_ARTICLES,
+  ADD_TAGS,
+  IS_LOGGED,
+  GET_USER,
+  REMOVE_USER,
+} from "./Types";
 
 const initalState = {
   articles: [],
   tags: [],
+  userInfo: {},
+  isLogged: false,
 };
 
 function reducer(state = initalState, action) {
   switch (action.type) {
-    case ADD_ARTICLES:
+    case GET_ARTICLES:
       return { ...state, articles: action.payload };
     case ADD_TAGS:
       return { ...state, tags: action.payload };
-    case SELECT_TAGS:
-      return { ...state, articles: action.payload };
+    case IS_LOGGED:
+      return { ...state, isLogged: action.payload };
+    case GET_USER:
+      return { ...state, userInfo: action.payload };
+    case REMOVE_USER:
+      return { ...state, userInfo: null };
     default:
       return state;
   }
