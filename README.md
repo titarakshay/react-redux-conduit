@@ -1,8 +1,8 @@
-# ![React + Redux Example App]
+# !React + Redux Example App
 
 [![RealWorld Frontend](https://img.shields.io/badge/realworld-frontend-%23783578.svg)](http://realworld.io)
 
-> ### React + Redux codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) spec and API.
+> ### React + Redux codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the RealWorld spec and API.
 
 
 
@@ -44,4 +44,3 @@ The example application is a social blogging site (i.e. a Medium.com clone) call
     - List of articles populated from author's created articles or author's favorited articles
 
 <br />
-[![Brought to you by Thinkster](https://raw.githubusercontent.com/gothinkster/realworld/master/media/end.png)](https://thinkster.io)
